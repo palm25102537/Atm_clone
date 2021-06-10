@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       password: { type: DataTypes.STRING, allowNull: false },
       balance: { type: DataTypes.INTEGER, allowNull: false, defaultValue: '0' },
       status: { type: DataTypes.ENUM(), values: ['opened', 'closed'], allowNull: false },
-      role: { type: DataTypes.ENUM(), values: ['member', 'admin'], allowNull: false }
+      role: { type: DataTypes.ENUM(), values: ['client', 'employee'], allowNull: false }
     },
     {
       tableName: 'accounts',
@@ -34,10 +34,9 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'RESTRICT',
       onUpdate: 'RESTRICT'
     })
-    Account.hasMany(models.Transaction, {
-      as: 'transactionFrom',
+    Account.hasMany(models.Cash, {
       foreignKey: {
-        name: 'transactionFromId',
+        name: 'byAccountId',
         allowNull: false
       },
       onDelete: 'RESTRICT',

@@ -18,15 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'RESTRICT'
     })
     Transaction.belongsTo(models.Account, {
-      as: 'transactionFrom',
-      foreignKey: {
-        name: 'transactionFromId',
-        allowNull: false
-      },
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT'
-    })
-    Transaction.belongsTo(models.Account, {
       as: 'transactionTo',
       foreignKey: {
         name: 'transactionToId',
