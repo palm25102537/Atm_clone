@@ -41,12 +41,12 @@ async function getCash(req, res, next) {
 }
 
 async function editCash(req, res, next) {
-  const { role } = req.user
+
   const { note, amount } = req.body
   const { id } = req.params
   const beforeUpdate = await Cash.findOne({ where: { id } })
   try {
-    if (role !== 'employee') throw new ValidateError('You are unauthorized', 401)
+
     const sendData = {
       note: note || beforeUpdate.note,
       amount: (amount === 0) ? amount : (!amount) ? beforeUpdate.amount : amount
