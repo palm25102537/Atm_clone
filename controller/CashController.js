@@ -52,7 +52,7 @@ async function editCash(req, res, next) {
       amount: (amount === 0) ? amount : (!amount) ? beforeUpdate.amount : amount
     }
 
-    await Cash.update(sendDate, { where: { id } })
+    await Cash.update(sendData, { where: { id } })
 
     res.status(200).json({ message: 'Updated' })
 

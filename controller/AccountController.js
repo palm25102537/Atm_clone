@@ -27,7 +27,7 @@ async function register(req, res, next) {
     if (isNaN(citizenId)) throw new ValidateError('Citizen Id must be number', 400)
     if (citizenId.length !== 13) throw new ValidateError('Citizen ID must have thirteen digits', 400)
     if (!isEmail.test(email)) throw new ValidateError('Please check your email', 400)
-    if (isNaN(balance)) throw new ValidateError('Balance must be number', 400)
+
 
     const hashPassword = await bcrypt.hash(password, parseInt(SALT_ROUND))
 
@@ -49,10 +49,13 @@ async function register(req, res, next) {
     await transaction.commit()
 
     const respond = {
+      id: accountData.id,
       name: accountData.name,
       surname: accountData.surname,
       citizenId: accountData.citizenId,
       email: accountData.email,
+      username: accountData.username,
+      password,
       balance: accountData.balance
     }
 
@@ -109,8 +112,7 @@ async function getMe(req, res, next) {
   const { name, surname, citizenId, username, email, balance, status, id } = req.user
 
   try {
-    const transaction = await Transaction.findAll({ where: { accountId: { id } } })
-    console.log(transaction)
+    const transaction = await Transaction.findAll({ where: { accountId: id }, order: [['id', 'DESC']] })
 
     const accountDetail = {
       name,
