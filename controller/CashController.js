@@ -30,7 +30,6 @@ async function getCash(req, res, next) {
   const { role } = req.user
 
   try {
-    if (role !== 'employee') throw new ValidateError('You are unauthorized', 401)
 
     const cash = await Cash.findAll()
 
